@@ -2,7 +2,8 @@
 
 # dbt Meta Testing
 This [dbt](https://docs.getdbt.com/docs/introduction) package contains macros to assert test and documentation coverage from
-`dbt_project.yml` configuration settings.
+`dbt_project.yml` configuration settings. This package is used to "test for test requirements" and/or "test for documentation 
+requirements" throughout your entire dbt project.
 
 ## Table of Contents
   - [Install](#install)
@@ -56,7 +57,8 @@ models:
 ```
 
 The `+required_tests` config must be `None` or a `dict` with `str` keys and `int`
-values. YAML dictionaries are accepted.
+values. YAML dictionaries are accepted. The `'int` value represents the number of 
+test(s) expected. 
 
 All the regular
 dbt configuration hierarchy rules apply. For example, individual model configs
@@ -73,11 +75,11 @@ SELECT
 > **_New in Version 0.3.3_**
 
 The keys of the config are evaluated against both data and schema tests
-(including any custom tests) using the
+(including any custom test names) using the
 [re.fullmatch](https://docs.python.org/3/library/re.html#re.fullmatch) function.
 
-Therefore, any test restriction which can be expressed in regex can  be
-evaluated. 
+Therefore, any test restriction which can be expressed in regex can be
+evaluated, and tested for. 
 
 For example:
 ```yaml
@@ -101,7 +103,7 @@ Schema tests are matched against their common names, (eg. `not_null`,
 
 Data tests are matched against their macro name. 
 
-Custom schema tests are matched against their name, eg. `mock_schema_test`:
+Custom schema tests are matched against their custom name, eg. `mock_schema_test`:
 
 ```yaml   
 # models/schema.yml
